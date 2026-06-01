@@ -1,0 +1,17 @@
+# Build-Ausgaben (werden durch build.sh erzeugt)
+*.prg
+*.d64
+
+# Backup-Dateien (vom C64-Programm selbst erzeugt)
+*.bak
+
+# Editor / IDE
+.vscode/
+.claude/
+
+# Archiv-Ordner mit alten Versionen
+Archiv/
+
+# macOS Metadaten
+.DS_Store
+._*
