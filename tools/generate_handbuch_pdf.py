@@ -18,6 +18,8 @@ HEAD = (0xFF, 0xFF, 0xFF)      # Weiß (Überschriften)
 ACCENT = (0x94, 0xE0, 0x89)    # Hellgrün (Farbe 13, Akzent/Zahlen)
 DIM = (0xA3, 0x9A, 0xE0)       # gedämpftes Lila (Fusszeile)
 
+LOGO_PATH = "tools/retrokauz_logo_c64.png"
+
 MARGIN_OUTER = 8
 MARGIN_INNER = 16
 NEXT = dict(new_x=XPos.LMARGIN, new_y=YPos.NEXT)
@@ -32,7 +34,7 @@ class Handbuch(FPDF):
         self.set_y(-14)
         self.set_font("Courier", "", 8)
         self.set_text_color(*DIM)
-        self.cell(0, 6, f"RETROKAUZ GAME COLLECTOR - HANDBUCH v1.0.0        Seite {self.page_no()}/{{nb}}",
+        self.cell(0, 6, f"RETROKAUZ GAME COLLECTOR - HANDBUCH v1.1        Seite {self.page_no()}/{{nb}}",
                   align="C", **NEXT)
 
     def page_frame(self):
@@ -106,10 +108,12 @@ pdf.set_y(40)
 pdf.set_font("Courier", "B", 15)
 pdf.set_text_color(*ACCENT)
 pdf.cell(0, 8, "========================================", align="C", **NEXT)
-pdf.set_font("Courier", "B", 24)
-pdf.set_text_color(*HEAD)
-pdf.cell(0, 14, "RETROKAUZ", align="C", **NEXT)
+pdf.ln(3)
+logo_w = 120
+pdf.image(LOGO_PATH, x=(PAGE_W - logo_w) / 2, w=logo_w)
+pdf.ln(3)
 pdf.set_font("Courier", "B", 16)
+pdf.set_text_color(*HEAD)
 pdf.cell(0, 10, "GAME COLLECTOR", align="C", **NEXT)
 pdf.set_font("Courier", "B", 15)
 pdf.set_text_color(*ACCENT)
@@ -119,7 +123,7 @@ pdf.set_font("Courier", "", 13)
 pdf.set_text_color(*TEXT)
 pdf.cell(0, 8, "B E N U T Z E R H A N D B U C H", align="C", **NEXT)
 pdf.set_font("Courier", "", 11)
-pdf.cell(0, 8, "Version 1.0.0", align="C", **NEXT)
+pdf.cell(0, 8, "Version 1.1", align="C", **NEXT)
 pdf.ln(14)
 pdf.set_font("Courier", "", 10.5)
 pdf.set_text_color(*TEXT)

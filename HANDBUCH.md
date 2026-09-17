@@ -1,6 +1,6 @@
 # RETROKAUZ Game Collector — Benutzerhandbuch
 
-**Version 1.0.0** · (c) 2026 Dennis Rapp · [www.retrokauz.de](https://www.retrokauz.de) · [info@retrokauz.de](mailto:info@retrokauz.de)
+**Version 1.1** · (c) 2026 Dennis Rapp · [www.retrokauz.de](https://www.retrokauz.de) · [info@retrokauz.de](mailto:info@retrokauz.de)
 
 Dieses Handbuch beschreibt die Bedienung des RETROKAUZ Game Collector für den
 Commodore 64. Es liegt dem Programm als PDF bei (`HANDBUCH.pdf`) und kann
@@ -26,15 +26,17 @@ Such-/Filterfunktion und Statistik.
 ## 3. Installation & erster Start
 
 1. Lade `RETROKAUZ.D64` aus dem Release-Bereich des Projekts herunter.
+
 2. Öffne die Datei in deinem Emulator (z.B. `x64sc RETROKAUZ.D64`) oder
    übertrage sie mit einem Tool wie `cbmtransfer` bzw. per SD2IEC auf eine
    echte Diskette.
+
 3. Lade und starte das Programm:
 
-   ```basic
-   LOAD "RETROKAUZ",8,1
-   RUN
-   ```
+```basic
+LOAD "RETROKAUZ",8,1
+RUN
+```
 
 4. Das Startbild erscheint kurz, danach öffnet sich das Hauptmenü.
 
@@ -63,8 +65,8 @@ Erfasst ein Spiel mit folgenden Angaben:
 - **Name** und **Studio** (Freitext)
 - **Jahr** (1950–2050)
 - **System** — Auswahl aus 18 Voreinstellungen (NES, SNES, Game Boy,
-  Famicom, Atari 4/8-Bit, Atari VCS, Atari ST, Genesis, Saturn, Xbox,
-  PS1/PS2/PS3, PC-DOS, C64, C16, TI-99/4A, Amstrad)
+   Famicom, Atari 4/8-Bit, Atari VCS, Atari ST, Genesis, Saturn, Xbox,
+   PS1/PS2/PS3, PC-DOS, C64, C16, TI-99/4A, Amstrad)
 - **Medium** — Diskette, Kassette, Modul, CD/DVD oder ISO-Datei
 - **Rating** — Bewertung von 1 (sehr schlecht) bis 10 (sehr gut)
 
