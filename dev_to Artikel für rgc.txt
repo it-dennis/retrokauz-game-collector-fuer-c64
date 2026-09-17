@@ -1,0 +1,177 @@
+dev.to Artikel                                                                                                                                                                    
+                                                                                                                                                                                    
+  Title: I wrote a game collection manager for the Commodore 64 in BASIC V2 — here's what I learned                                                                                 
+                                                                                                                                                                                  
+  Tags: retro, programming, beginners, career                                                                                                                                       
+                                                                                                                                                                                    
+  ---
+
+  ▎ I wrote a game collection manager for the Commodore 64 in BASIC V2 — here's what I learned
+  ▎
+  ▎ In 2026, I built a game collection manager — not as a web app, not as a mobile app, but as a Commodore 64 BASIC V2 program.
+  ▎
+  ▎ Here's why, what the constraints forced me to do differently, and what I genuinely enjoyed about it.
+  ▎
+  ▎ ---
+  ▎ The idea
+  ▎
+  ▎ I collect retro games. Most collector tools run on modern hardware — spreadsheets, apps, websites. But I wanted something that feels right: catalog your C64 games on a C64. No
+  ▎ cloud, no subscription, no internet connection. Just a breadbin, a 1541 floppy drive, and some BASIC.
+  ▎
+  ▎ The result is Retrokauz Game Collector — open source, fits on a single floppy, runs on real hardware and in emulators like VICE.
+  ▎
+  ▎ ---
+  ▎ The constraints
+  ▎
+  ▎ Commodore BASIC V2 was released in 1977. It has:
+  ▎
+  ▎ - No functions (only GOSUB/RETURN)
+  ▎ - No local variables — everything is global
+  ▎ - No string manipulation beyond LEFT$, MID$, RIGHT$, LEN
+  ▎ - No data structures — only arrays
+  ▎ - Line numbers as the only form of organisation
+  ▎ - Roughly 38 KB of usable RAM
+  ▎
+  ▎ These aren't just quirks. They shape every decision you make.
+  ▎
+  ▎ ---
+  ▎ Memory layout: six parallel arrays
+  ▎
+  ▎ Modern languages give you objects. BASIC gives you arrays. To store a game entry with six fields, I use six arrays in parallel — one per field, indexed identically:
+  ▎
+  ▎ 20 DIM G$(100),E$(100),S$(100),M$(100),Y(100),R(100)
+  ▎
+  ▎ - G$(i) — game title
+  ▎ - E$(i) — studio
+  ▎ - S$(i) — system (NES, C64, PS1…)
+  ▎ - M$(i) — medium (disk, tape, cart…)
+  ▎ - Y(i) — year (numeric)
+  ▎ - R(i) — rating 1–10 (numeric)
+  ▎
+  ▎ Entry 1 lives at index 1 across all six arrays. Simple, fragile, and perfectly sufficient for 100 entries on 8-bit hardware.
+  ▎
+  ▎ ---
+  ▎ Sorting: bubble sort with six simultaneous swaps
+  ▎
+  ▎ No array.sort(). No comparator function. Just nested loops and manual swaps — and because I have six parallel arrays, every swap touches all six:
+  ▎
+  ▎ 4000 REM *** BUBBLE SORT ***
+  ▎ 4010 IF C < 2 THEN RETURN
+  ▎ 4020 FOR I = 1 TO C-1 : FOR J = 1 TO C-I
+  ▎ 4040   IF G$(J) <= G$(J+1) THEN 4100
+  ▎ 4050   T$=G$(J) : G$(J)=G$(J+1) : G$(J+1)=T$
+  ▎ 4050   T$=E$(J) : E$(J)=E$(J+1) : E$(J+1)=T$
+  ▎ 4070   T=Y(J)   : Y(J)=Y(J+1)   : Y(J+1)=T
+  ▎ 4070   T$=S$(J) : S$(J)=S$(J+1) : S$(J+1)=T$
+  ▎ 4085   T$=M$(J) : M$(J)=M$(J+1) : M$(J+1)=T$
+  ▎ 4085   T=R(J)   : R(J)=R(J+1)   : R(J+1)=T
+  ▎ 4100 NEXT J : NEXT I : RETURN
+  ▎
+  ▎ Bubble sort on a 1 MHz CPU with 100 entries is noticeable — you see it working. On real hardware, that tiny delay is oddly satisfying.
+  ▎
+  ▎ ---
+  ▎ Disk I/O: talking directly to the 1541
+  ▎
+  ▎ The C64 has no operating system in the modern sense. To read or write a file, you open a channel directly to the disk drive — device number 8 — and communicate over a serial
+  ▎ bus:
+  ▎
+  ▎ 1000 REM *** LOAD FROM DISK ***
+  ▎ 1010 OPEN 1,8,2,D$+",S,R"
+  ▎ 1015 IF ST>63 THEN PRINT "FILE NOT FOUND" : CLOSE 1 : RETURN
+  ▎ 1030 INPUT#1,C
+  ▎ 1040 FOR I=1 TO C
+  ▎ 1050   INPUT#1,G$(I)
+  ▎ 1060   INPUT#1,E$(I)
+  ▎ ...
+  ▎ 1120 CLOSE 1 : RETURN
+  ▎
+  ▎ D$ is the filename ("games"). ",S,R" means sequential file, read mode. ST is the status register — ST > 63 signals file-not-found. Every field is written as a separate line and
+  ▎  read back with INPUT#1.
+  ▎
+  ▎ There's no JSON, no serialisation library, no database. It's a text file on a magnetic disk that spins at 300 RPM.
+  ▎
+  ▎ ---
+  ▎ The backup system: 1541 command channel
+  ▎
+  ▎ The 1541 has a command channel — channel 15 — through which you can send direct DOS commands to the drive. The backup routine uses this to rename the current save file to .bak 
+  ▎ before writing fresh data:
+  ▎
+  ▎ 2010 REM *** BACKUP THEN SAVE ***
+  ▎ 2011 OPEN 15,8,15
+  ▎ 2012 PRINT#15,"S0:"+D$+".BAK"        : REM delete old backup
+  ▎ 2013 PRINT#15,"R0:"+D$+".BAK="+D$    : REM rename games → games.bak
+  ▎ 2014 CLOSE 15
+  ▎ 2015 OPEN 1,8,2,D$+",S,W"            : REM open fresh file for writing
+  ▎
+  ▎ "S0:filename" — scratch (delete). "R0:new=old" — rename. No file system API. Just strings sent down a serial wire to a drive with its own 6502 processor inside.
+  ▎
+  ▎ After saving, the error channel is read back to check for drive errors:
+  ▎
+  ▎ 2070 OPEN 15,8,15 : INPUT#15,EN,EM$,ET,ES : CLOSE 15
+  ▎ 2080 IF EN > 0 AND EN <> 62 THEN PRINT "DRIVE ERROR: ";EN;EM$
+  ▎
+  ▎ Error code 62 is "file not found" — which is fine on the first save. Everything else is a real problem.
+  ▎
+  ▎ ---
+  ▎ Color themes: POKE directly into hardware registers
+  ▎
+  ▎ The C64's border and background colors are controlled by two memory-mapped hardware registers: address 53280 (border) and 53281 (background). There's no setBackgroundColor().
+  ▎ You write a value directly into RAM and the VIC-II chip picks it up immediately:
+  ▎
+  ▎ 9000 POKE 53280,R : POKE 53281,H : PRINT CHR$(S) : RETURN
+  ▎
+  ▎ 9150 IF F=1 THEN H=6  : R=14 : S=154  : REM Classic  — cyan on blue
+  ▎ 9160 IF F=2 THEN H=0  : R=0  : S=30   : REM Hacker   — green on black
+  ▎ 9170 IF F=3 THEN H=15 : R=12 : S=144  : REM Retro    — black on white
+  ▎
+  ▎ CHR$(S) sets the text color by printing a non-visible control character — the C64's way of switching foreground color mid-stream. CHR$(28) mid-print switches to red for game
+  ▎ titles, then CHR$(S) switches back to the current theme color.
+  ▎
+  ▎ Three lines. No CSS. No theme engine.
+  ▎
+  ▎ ---
+  ▎ Substring search without CONTAINS
+  ▎
+  ▎ BASIC V2 has no CONTAINS or INSTR. Partial title search is implemented with a manual sliding window:
+  ▎
+  ▎ 5107 L1=LEN(G$(I)) : L2=LEN(T$)
+  ▎ 5108 FOR P=1 TO (L1-L2)+1
+  ▎ 5110   IF MID$(G$(I),P,L2)=T$ THEN GOSUB 5500 : K=K+1 : P=L1
+  ▎ 5112 NEXT P
+  ▎
+  ▎ Slide a window of length L2 across the title. If it matches at any position, print the result and jump the cursor to the end to exit early. That's your search engine.
+  ▎
+  ▎ ---
+  ▎ What I took away from this
+  ▎
+  ▎ Working in BASIC V2 forces a kind of clarity that modern development rarely demands. There's no framework to hide behind, no abstraction layer to add. Every byte you use is a
+  ▎ byte you chose to use.
+  ▎
+  ▎ The constraints aren't limitations — they're a design space. When you can't nest functions, you think harder about line numbers and subroutine layout. When you can't use
+  ▎ objects, you think harder about which fields actually belong together. When you can't afford a bad sort algorithm, you realise bubble sort on 100 entries is completely fine.
+  ▎
+  ▎ It's also just fun. The sound of a 1541 reading a disk. The border flickering as the VIC-II register gets poked. A loading bar built from PRINT "="; in a loop.
+  ▎
+  ▎ ---
+  ▎ Try it
+  ▎
+  ▎ The full source code and a ready-to-run .D64 disk image are on GitHub under GPL v3:
+  ▎
+  ▎ https://github.com/it-dennis/retrokauz-game-collector-fuer-c64
+  ▎
+  ▎ LOAD "RETROKAUZ",8
+  ▎ RUN
+  ▎
+  ▎ Questions, suggestions, and pull requests welcome.
+
+  ---
+  Das kannst du direkt so auf dev.to eintippen — die Code-Blöcke werden mit Syntax-Highlighting dargestellt. Die Tags retro, programming, beginners, career holen dir sowohl die
+  Retro-Community als auch Leute, die gerade Programmieren lernen und sowas inspirierend finden.
+
+  Soll ich noch ein Cover-Bild vorschlagen (Screenshot aus VICE), oder passt das so?
+
+✻ Cogitated for 1m 9s                
+
+※ recap: GitHub repo für Retrokauz Game Collector ist fertig aufgesetzt mit Lizenz, .gitignore, Release v1.0 inkl. D64-Download und einem vollständigen dev.to Artikel zur          
+  Bewerbung. Nächster Schritt: Artikel auf dev.to veröffentlichen.
+                                                                     

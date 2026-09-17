@@ -10,6 +10,15 @@ Ein intuitiver Spiele-Verwalter für den **Commodore 64**, entwickelt in Commodo
 - **Suche & Filter:** Teilsuche in Titeln sowie Filterung nach System, Medium, Jahr oder Bewertung
 - **Designs:** Drei wählbare Farbschemata (Classic, Hacker, Retro)
 - **Datensicherheit:** Automatisches Backup-System (.bak) und Fehlerprüfung des Laufwerks
+- **Hilfe:** Eingebaute Kurzhilfe im Programm (Menüpunkt `[9]`) sowie ein ausführliches Handbuch als PDF
+
+## Handbuch
+
+Ein vollständiges Benutzerhandbuch liegt als [`HANDBUCH.pdf`](HANDBUCH.pdf) bei
+(auch zum Ausdrucken geeignet) und kann dem Programm beim Download beigelegt
+werden. Die Textquelle findet sich in [`HANDBUCH.md`](HANDBUCH.md). Direkt im
+Programm steht unter Menüpunkt `[9] Hilfe` eine kompakte Kurzfassung auf dem
+Bildschirm zur Verfügung.
 
 ## Nutzung am C64 oder Emulator
 
@@ -53,6 +62,9 @@ Das Skript konvertiert `RETROKAUZ.bas` in ein C64-kompatibles `RETROKAUZ.prg` un
 | `RETROKAUZ.bas` | Quellcode im ASCII-Textformat |
 | `build.sh` | Build-Skript für macOS / Linux |
 | `build_retrokauz.bat` | Build-Skript für Windows |
+| `HANDBUCH.pdf` | Benutzerhandbuch (druckfertig, liegt dem Download bei) |
+| `HANDBUCH.md` | Textquelle des Handbuchs |
+| `tools/generate_handbuch_pdf.py` | Skript zum Neuerzeugen von `HANDBUCH.pdf` (benötigt `pip install fpdf2`) |
 | `README.md` | Diese Dokumentation |
 | `LICENSE` | GNU GPL v3.0 Lizenztext |
 

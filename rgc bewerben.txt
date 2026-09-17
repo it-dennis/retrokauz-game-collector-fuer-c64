@@ -1,0 +1,99 @@
+❯ wie kann ich das jetzt am besten bewerben? Ich nutze es in erster Linie als Repo für mein Portfolio aber so ein bisschen Werbung, das wäre ja schon was.                          
+                                                                                                                                                                                    
+● Gute Frage. Für ein Nischen-Retro-Projekt wie dieses gibt es ein paar Kanäle, die wirklich gut passen:                                                                            
+                                         
+  Portfolio (wichtigste Maßnahme)                                                                                                                                                   
+  - GitHub-Profil README.md — falls du noch keins hast, ein kurzes Profil-README mit dem Projekt als Highlight ist das Erste, was Recruiter/Kunden sehen.
+                                                                                                                                                                                    
+  Retro-Community (höchste Relevanz für das Thema)          
+  - reddit.com/r/c64 und r/vintagecomputing — kurzer Post mit Screenshot, Link zum Repo, fertig. Die Community liebt BASIC-Projekte auf echter Hardware.
+  - Forum64.de — das größte deutschsprachige C64-Forum, sehr aktiv.
+  - Lemon64.com — internationale C64-Community.
+
+  Entwickler-Sichtbarkeit
+  - Hackaday.io — Retro-Projekte kommen dort gut an, kurzes Projekt anlegen mit Repo-Link.
+  - dev.to — kleiner Blogartikel: "Ich habe einen Game-Collector für den C64 in BASIC geschrieben" — solche Artikel werden regelmäßig viral in der Retro-Ecke.
+
+  Social Media
+  - Mastodon (Instanz fosstodon.org) — sehr technik-affine Community, Hashtags #C64 #RetroComputing #BASIC funktionieren dort gut.
+  - Twitter/X mit #C64 #Commodore64 falls du dort aktiv bist.
+
+  ---
+  Meine Empfehlung für den Einstieg: Forum64.de + r/c64 — 30 Minuten Aufwand, direkt die richtige Zielgruppe, und ein bisschen GitHub-Traffic kommt fast automatisch mit. Soll ich
+  dir einen fertigen Post-Text dafür schreiben?
+
+✻ Cooked for 14s              
+
+❯ oh ja gerne                                                                                                                                                                       
+               
+● Hier sind fertige Texte für die wichtigsten Kanäle:                                                                                                                               
+                                                            
+  ---                                                                                                                                                                               
+  Forum64.de
+                                                                                                                                                                                    
+  Betreff: [BASIC] Retrokauz Game Collector v1.0 – Spieleverwaltung direkt auf dem C64
+
+  ▎ Hallo zusammen,
+  ▎
+  ▎ ich habe einen kleinen Game Collector für den C64 gebaut — komplett in Commodore BASIC V2, läuft auf echter Hardware und im Emulator.
+  ▎
+  ▎ Was kann er?
+  ▎ - Bis zu 100 Spiele verwalten (Titel, Studio, Jahr, System, Medium, Rating)
+  ▎ - Suche & Filter nach allen Feldern
+  ▎ - Automatischer Bubble-Sort beim Speichern
+  ▎ - Drei Farbschemata (Classic, Hacker, Retro)
+  ▎ - Automatisches Backup-System auf Diskette
+  ▎
+  ▎ Das Ganze ist als Open-Source-Projekt auf GitHub verfügbar (GPL v3), inkl. fertigem D64-Image zum sofortigen Losspielen.
+  ▎
+  ▎ Download & Quellcode: https://github.com/it-dennis/retrokauz-game-collector-fuer-c64
+  ▎
+  ▎ Feedback und Ideen sind herzlich willkommen!
+
+  ---
+  Reddit — r/c64
+
+  Title: I built a game collection manager for the C64 in pure BASIC V2 — open source
+
+  ▎ Hey r/c64!
+  ▎
+  ▎ I wrote a game collection manager for the Commodore 64 entirely in Commodore BASIC V2. It runs on real hardware and in emulators like VICE.
+  ▎
+  ▎ Features:
+  ▎ - Manage up to 100 games (title, studio, year, system, medium, rating)
+  ▎ - Search & filter by any field
+  ▎ - Alphabetical bubble-sort on save
+  ▎ - 3 color themes (Classic, Hacker, Retro)
+  ▎ - Automatic .bak backup system
+  ▎
+  ▎ The .D64 image is ready to download and run — no build step needed.
+  ▎
+  ▎ GitHub (GPL v3): https://github.com/it-dennis/retrokauz-game-collector-fuer-c64
+  ▎
+  ▎ LOAD "RETROKAUZ",8
+  ▎ RUN
+  ▎
+  ▎ Would love to hear what you think!
+
+  ---
+  dev.to — Artikel-Intro
+
+  Title: I wrote a game collection manager for the Commodore 64 in BASIC V2
+
+  ▎ In 2026, I built a game collection manager — not as a web app, not as a mobile app, but as a Commodore 64 BASIC V2 program.
+  ▎
+  ▎ Here's why, and what I learned.
+  ▎
+  ▎ The idea
+  ▎ I collect retro games. Most collector tools run on modern hardware, but I wanted something that feels right: catalog your C64 games on a C64. No cloud, no app, just a 1541
+  ▎ floppy drive and some BASIC.
+  ▎
+  ▎ What it does
+  ▎ RETROKAUZ manages up to 100 entries with title, studio, year, system, medium and rating. It sorts alphabetically on save (bubble-sort — because that's what you do in BASIC),
+  ▎ filters by any field, and backs up automatically to a .bak file on disk.
+  ▎
+  ▎ The constraints were the fun part
+  ▎ No arrays of objects. No functions. No imports. Every subroutine lives at a fixed line number. Memory is tight. GOTO is your best friend whether you like it or not.
+  ▎
+  ▎ The full source code is on GitHub (GPL v3), including a ready-to-run .D64 image:
+  ▎ 👉 https://github.com/it-dennis/retrokauz-game-collector-fuer-c64

@@ -8,7 +8,7 @@
 60 rem *** startbildschirm ***
 70 print chr$(147);chr$(s)
 80 print "========================================"
-90 print "      retrokauz game-collector v1.0     "
+90 print "      retrokauz game-collector v1.1     "
 100 print "========================================"
 110 print "(c) 2026 dennis rapp - www.retrokauz.de"
 120 print "licensed under gnu gpl v3.0"
@@ -34,6 +34,7 @@
 300 print "  [ 6 ] farbschema waehlen"
 306 print "  [ 7 ] backup wiederherstellen"
 307 print "  [ 8 ] programm beenden"
+308 print "  [ 9 ] hilfe"
 310 print ""
 370 print "========================================"
 380 print "eintraege:";c
@@ -46,6 +47,7 @@
 455 if a$="6" then gosub 9100
 460 if a$="7" then gosub 2200
 465 if a$="8" then gosub 1500
+467 if a$="9" then gosub 10000
 470 goto 200
 
 1000 rem *** laden ***
@@ -278,3 +280,91 @@
 9160 if f=2 then h=0:r=0:s=30  :rem s=30 ist gruen
 9170 if f=3 then h=15:r=12:s=144 :rem s=144 ist schwarz
 9180 gosub 9000:return
+
+10000 rem *** hilfe ***
+10005 hp=1
+10010 print chr$(147);chr$(s)
+10011 if hp=1 then gosub 10100
+10012 if hp=2 then gosub 10200
+10013 if hp=3 then gosub 10300
+10014 if hp=4 then gosub 10400
+10015 if hp=5 then gosub 10500
+10020 print "----------------------------------------"
+10025 if hp<5 then print "(leertaste) weiter  (enter) zurueck"
+10026 if hp=5 then print "(enter) zurueck zum hauptmenue"
+10030 get a$:if a$="" then 10030
+10035 if a$=" " and hp<5 then hp=hp+1:goto 10010
+10040 return
+
+10100 print "========================================"
+10101 print "<       hilfe (1/5): ueberblick        >"
+10102 print "========================================"
+10103 print ""
+10104 print "der retrokauz game collector"
+10105 print "verwaltet bis zu 100 spiele der"
+10106 print "eigenen sammlung auf diskette."
+10107 print ""
+10108 print "erfasst werden: name, studio, jahr,"
+10109 print "system, medium und bewertung (1-10)."
+10110 print ""
+10111 print "die daten liegen in der datei games"
+10112 print "ein backup liegt in games.bak"
+10113 return
+
+10200 print "========================================"
+10201 print "<       hilfe (2/5): menue 1-5         >"
+10202 print "========================================"
+10203 print ""
+10204 print "[1] neuer eintrag"
+10205 print "    spiel mit allen daten erfassen"
+10206 print "[2] spiele anzeigen"
+10207 print "    liste durchblaettern (leertaste)"
+10208 print "[3] spiele filtern"
+10209 print "    suche nach system, name, medium,"
+10210 print "    rating oder jahr"
+10211 print "[4] eintrag loeschen"
+10212 print "    mit sicherheitsabfrage (j/n)"
+10213 print "[5] statistik"
+10214 print "    anzahl, durchschnitt, pro system"
+10215 return
+
+10300 print "========================================"
+10301 print "<       hilfe (3/5): menue 6-9         >"
+10302 print "========================================"
+10303 print ""
+10304 print "[6] farbschema waehlen"
+10305 print "    classic, hacker oder retro"
+10306 print "[7] backup wiederherstellen"
+10307 print "    stellt vorherige speicherung"
+10308 print "    wieder her (games.bak)"
+10309 print "[8] programm beenden"
+10310 print "[9] diese hilfe"
+10311 return
+
+10400 print "========================================"
+10401 print "<        hilfe (4/5): tipps            >"
+10402 print "========================================"
+10403 print ""
+10404 print "jahr: nur 1950 bis 2050 erlaubt"
+10405 print "rating: 1 (schlecht) bis 10 (gut)"
+10406 print "filter 'name': teilsuche moeglich,"
+10407 print "z.b. 'mario' findet alle mario-teile"
+10408 print ""
+10409 print "enter bestaetigt eine eingabe"
+10410 print "leertaste blaettert in listen weiter"
+10411 return
+
+10500 print "========================================"
+10501 print "<    hilfe (5/5): fehler & kontakt     >"
+10502 print "========================================"
+10503 print ""
+10504 print "disk-fehler zeigen nummer + text."
+10505 print "bei problemen: backup wiederherstellen"
+10506 print "(menuepunkt 7) oder diskette pruefen."
+10507 print ""
+10508 print "ausfuehrliches handbuch als pdf liegt"
+10509 print "dem programm bei (handbuch.pdf)."
+10510 print ""
+10511 print "(c) 2026 dennis rapp"
+10512 print "www.retrokauz.de"
+10513 return
