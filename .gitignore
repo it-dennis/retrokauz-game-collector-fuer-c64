@@ -15,3 +15,8 @@ Archiv/
 # macOS Metadaten
 .DS_Store
 ._*
+
+# Marketing-Dateien
+
+Marketing/
+

@@ -1,4 +1,4 @@
-# Retrokauz Game Collector v1.0.0
+# Retrokauz Game Collector v1.1
 
 Ein intuitiver Spiele-Verwalter für den **Commodore 64**, entwickelt in Commodore BASIC V2. Dieses Tool erlaubt es Sammlern, ihre Retro-Schätze direkt auf echter Hardware oder im Emulator zu katalogisieren.
 
@@ -27,6 +27,7 @@ Lade die fertige Datei `RETROKAUZ.d64` aus dem Repository herunter (Releases) un
 ```basic
 LOAD "RETROKAUZ",8
 RUN
+
 ```
 
 ---
@@ -49,6 +50,7 @@ git clone https://github.com/it-dennis/retrokauz-game-collector
 cd retrokauz-game-collector
 chmod +x build.sh
 ./build.sh
+
 ```
 
 Das Skript konvertiert `RETROKAUZ.bas` in ein C64-kompatibles `RETROKAUZ.prg` und erstellt automatisch ein frisches `RETROKAUZ.d64` Disk-Image.
